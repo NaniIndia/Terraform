@@ -1,21 +1,26 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+pipeline{
+   agent any
+   tools {
+    terraform 'terraform'
+   }
+stages {
+  stage ('git checkout') {
+    steps {
+      git branch: 'main', credentialsId
     }
-}
+  }
+  stage('Terraform Initialization') {
+    steps {
+	sh 'terraform init'
+    }
+  }
+  stage ('terraform plan') {
+     steps {
+	sh 'terraform plan'
+      }
+  }
+  stage ('Terraform Provisioning') {
+    steps {
+	sh 'terraform apply' 
+    }
+  }
