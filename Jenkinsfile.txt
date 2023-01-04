@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
    agent any
    tools {
     terraform 'terraform'
@@ -9,7 +9,7 @@ stages {
       git branch: 'main', credentialsId: '4c7b2a72-8348-4dc1-bf5c-73b7da55b035', url: 'https://github.com/NaniIndia/Terraform.git'
     }
   }
-  stage('Terraform Initialization') {
+  stage ('Terraform Initialization') {
     steps {
 	sh 'terraform init'
     }
